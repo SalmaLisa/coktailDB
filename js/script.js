@@ -26,14 +26,22 @@ const displayData = (drinks) => {
     `;
     drinksContainer.appendChild(drinksDiv);
   });
+  spinner(false);
 };
 // search functionality
 const searchFunction = () => {
+  spinner(true);
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   fetchData(searchText);
 };
-
+// enter key activate
+const searchField = document.getElementById("search-field");
+searchField.addEventListener('keyup', function (e) {
+  if (e.key === 'Enter') {
+    searchFunction();
+  }
+})
 // Details button funtionality
 const loadDetails = (id) => {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -53,4 +61,15 @@ const displayDetails = (drink) => {
     <p>Making Procrss : ${drink.strInstructions}</p>
     `;
 };
-fetchData("a");
+
+// loader or spinner
+const spinner = isLoading => {
+  const spinner = document.getElementById('spinner');
+  if (isLoading) {
+    spinner.classList.remove('d-none')
+  }
+  else {
+    spinner.classList.add('d-none')
+  }
+}
+// fetchData("a");
